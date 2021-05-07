@@ -1,7 +1,5 @@
 # creating new class
 import pdb
-from ..api import set_moves
-
 
 class DanceMove():
     _styles =['Street', 'Ballroom', 'Popping', 'Locking']

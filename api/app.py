@@ -7,7 +7,7 @@ CORS(app)
 
 @app.route('/')
 def home():
-    return 'Hey! We are going to show you some dance moves in a sec!'
+    return jsonify({"message": "Hey! We are going to show you some dance moves in a sec!"}), 200
 
 @app.route('/dance_moves', methods=['GET', 'POST'])
 def dance_moves_handler():
@@ -19,4 +19,4 @@ def dance_moves_handler():
     return jsonify(resp), code
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    create_app()
