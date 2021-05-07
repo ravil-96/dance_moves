@@ -7,9 +7,17 @@ dance_moves = [
 def index(req):
     return [d for d in dance_moves], 200
 
+def show(req, uid):
+    return find_by_uid(uid), 200
+
 def create(req):
     new_dance_move = req.get_json()
     new_dance_move["id"] = len(dance_moves) + 1
     dance_moves.append(new_dance_move)
     return new_dance_move, 201
 
+def find_by_uid(uid):
+    try:
+        return next(move for move in dance_moves if move['id'] == uid)
+    except:
+        raise BadRequest(f"We don't have that move in out band yet.")
