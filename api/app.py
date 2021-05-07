@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from controllers import dance_moves
+from werkzeug import exceptions
+
 
 app = Flask(__name__)
 CORS(app)
@@ -20,3 +22,11 @@ def dance_moves_handler():
 
 if __name__ == "__main__":
     create_app()
+
+@app.route('/api/cats/<int:cat_id>')
+def dance_moves_handler(move_id):
+    fns = {
+        'GET': dance_moves.show,
+    }
+    dance_move = all_dance_moves[move_id-1]
+    return jsonify(dance_move)

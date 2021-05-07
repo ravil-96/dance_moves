@@ -20,4 +20,4 @@ def find_by_uid(uid):
     try:
         return next(move for move in dance_moves if move['id'] == uid)
     except:
-        raise BadRequest(f"We don't have that move in out band yet.")
+        raise BadRequest("We don't have that move in out band yet.")
