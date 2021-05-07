@@ -1,7 +1,7 @@
 from models import dance_move
 
 def index(req):
-    return dance_moves, 200
+    return dance_move.all, 200
 
 def create(req):
     new_dance_move = req.get_json()
