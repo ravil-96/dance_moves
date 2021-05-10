@@ -20,13 +20,28 @@ def dance_moves_handler():
     resp, code = fns[request.method](request)
     return jsonify(resp), code
 
-if __name__ == "__main__":
-    create_app()
-
-@app.route('/api/cats/<int:cat_id>')
+@app.route('/api/cats/<int:cat_id>', methods=['GET', 'PATCH', 'PUT', 'DELETE'])
 def dance_moves_handler(move_id):
     fns = {
         'GET': dance_moves.show,
+        'PATCH': dance_moves.update,
+        'PUT': dance_moves.update,
+        'DELETE': dance_moves.destroy
     }
-    dance_move = all_dance_moves[move_id-1]
-    return jsonify(dance_move)
+    resp, code = fns[request.method](request, move_id)
+    return jsonify(resp), code
+
+@app.errorhandler(exceptions.NotFound)
+def handle_404(err):
+    return {'message': f'Oops! {err}'}, 404
+
+@app.errorhandler(exceptions.BadRequest)
+def handle_400(err):
+    return {'message': f'Oops! {err}'}, 400
+
+@app.errorhandler(exceptions.InternalServerError)
+def handle_500(err):
+    return {'message': f"It's not you, it's us"}, 500
+
+if __name__ == "__main__":
+    app.run(debug=True)
